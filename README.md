@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# 🌹 Rose Sigil Creation App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-fidelity web application for generating esoteric sigils using the traditional **Golden Dawn Rose Cross** technique. This tool bridges ancient ceremonial magic with modern digital precision, offering a ritualistic and aesthetically premium experience.
 
-Currently, two official plugins are available:
+![Desktop View](screenshots/main_view.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🌒 Overview
 
-## React Compiler
+**Rose Sigil** is a specialized tool for practitioners and researchers of the Western Esoteric Tradition. It automates the complex process of alchemical letter reduction and transliteration, tracing a golden path over the 22-petal Rose Cross to manifest a unique sigil based on your intent.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+- **Obsidian & Gold Aesthetics**: A premium, minimalist design inspired by ancient grimoires.
+- **Ritual Animation Engine**: Real-time visualization of vowel removal and character reduction.
+- **Dynamic Tracing**: A smooth, glowing golden path drawn slowly to simulate a ritual act.
+- **Transparent Export**: High-quality PNG export for use in digital or physical ritual documents.
+- **Responsive Design**: Optimized for both high-end desktops and mobile devices.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+![Mobile View](screenshots/mobile_view.png)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📜 The Technique
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The application follows the sacred method of the Golden Dawn:
+1. **Intention**: Your desire is entered and distilled.
+2. **Reduction**: Non-essential vowels and duplicate letters are removed.
+3. **Transliteration**: The core essence is mapped to the Hebrew alphabet.
+4. **Tracing**: The sigil is drawn starting with a circle and ending with a grounding T-bar.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠 Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Framework**: React + Vite
+- **Animations**: Framer Motion
+- **Rendering**: HTML5 Canvas API
+- **Typography**: Cormorant Garamond & Inter
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+*Created with intention by Rose Sigil © 2026*
