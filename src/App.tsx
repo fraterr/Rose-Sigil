@@ -82,8 +82,9 @@ function App() {
           <img src={`${import.meta.env.BASE_URL}logo.png`} alt="Rose Sigil Logo" className="logo-img" />
           <h1>Rose Sigil</h1>
         </div>
-        <button className="icon-btn" onClick={() => setShowInfo(!showInfo)} title="Information">
-          <Info size={20} />
+        <button className="method-btn" onClick={() => setShowInfo(!showInfo)}>
+          <Info size={14} />
+          <span>THE TECHNIQUE</span>
         </button>
       </header>
 

@@ -375,32 +375,32 @@ input[type="text"]:focus {
   opacity: 0.4;
 }
 
-.icon-btn {
+.method-btn {
   background: transparent;
-  border: 0.5px solid rgba(212, 175, 55, 0.4);
+  border: 0.5px solid rgba(212, 175, 55, 0.3);
   color: var(--accent-color);
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.8rem;
   cursor: pointer;
   transition: var(--transition);
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
-.icon-btn:hover {
+.method-btn span {
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  font-weight: 400;
+}
+
+.method-btn:hover {
   opacity: 1;
+  background: rgba(212, 175, 55, 0.05);
   border-color: var(--accent-color);
-  box-shadow: 0 0 15px var(--accent-glow);
-  transform: scale(1.05);
-}
-
-.icon-btn svg {
-  width: 18px;
-  height: 18px;
-  stroke-width: 1.5;
+  box-shadow: 0 0 20px var(--accent-glow);
 }
 
 @media (max-width: 1100px) {
