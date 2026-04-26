@@ -177,6 +177,29 @@ input[type="text"]:focus {
   animation: fadeIn 0.3s ease-out;
 }
 
+.visual-reduction {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-height: 4rem;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px dashed var(--border-color);
+  margin-top: 1rem;
+}
+
+.anim-char {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: var(--font-main);
+  display: inline-block;
+  color: var(--accent-color);
+}
+
 .double-indicator {
   position: absolute;
   top: -8px;
