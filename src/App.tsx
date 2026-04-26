@@ -18,7 +18,7 @@ function App() {
   const handleGenerate = async () => {
     if (!desire) return;
     
-    // Preparazione testo iniziale
+    // Preparation
     const initialText = desire.toLowerCase().replace(/[^a-z]/g, '').split('').map((c, i) => ({
       char: c,
       id: i,
@@ -28,7 +28,7 @@ function App() {
     setAnimatedText(initialText);
     setPhase('REMOVING_VOWELS');
     
-    // 1. Animazione rimozione vocali
+    // 1. Vowel removal animation
     await new Promise(r => setTimeout(r, 1000));
     const vowels = ['a', 'e', 'i', 'o', 'u'];
     setAnimatedText(prev => prev.map(item => 
@@ -40,7 +40,7 @@ function App() {
       .map((item, i) => ({ ...item, id: i, status: 'active' as const }));
     setAnimatedText(noVowels);
     
-    // 2. Animazione rimozione doppie
+    // 2. Duplicate removal animation
     setPhase('REMOVING_DUPLICATES');
     await new Promise(r => setTimeout(r, 1000));
     const seen = new Set<string>();
@@ -59,7 +59,7 @@ function App() {
     }).map((item, i) => ({ ...item, id: i, status: 'active' as const }));
     setAnimatedText(unique);
     
-    // 3. Fase Sigillo
+    // 3. Sigil Phase
     setPhase('GENERATING');
   };
 
@@ -85,18 +85,18 @@ function App() {
           <h1>Rose Sigil</h1>
         </div>
         <button className="icon-btn" onClick={() => setShowInfo(!showInfo)}>
-          <Info size={20} />
+          <Info size={20} title="Information" />
         </button>
       </header>
 
       <main className="content">
         <section className="input-section">
           <div className="input-group">
-            <label htmlFor="desire">Il tuo desiderio</label>
+            <label htmlFor="desire">Your Desire</label>
             <input
               id="desire"
               type="text"
-              placeholder="Scrivi qui..."
+              placeholder="Write here..."
               value={desire}
               onChange={(e) => {
                 setDesire(e.target.value);
@@ -115,7 +115,7 @@ function App() {
                 onChange={(e) => setUseAiqBeker(e.target.checked)}
                 disabled={phase !== 'IDLE'}
               />
-              Usa Riduzione Aiq Beker (9 Camere)
+              Use Aiq Beker Reduction (9 Chambers)
             </label>
           </div>
 
@@ -124,11 +124,14 @@ function App() {
             onClick={handleGenerate} 
             disabled={!desire || (phase !== 'IDLE' && phase !== 'COMPLETE')}
           >
-            {phase === 'IDLE' || phase === 'COMPLETE' ? 'Genera Sigillo' : 'Elaborazione...'}
+            {phase === 'IDLE' || phase === 'COMPLETE' ? 'Generate Sigil' : 'Processing...'}
           </button>
 
           <div className="visual-reduction">
             <AnimatePresence mode="popLayout">
+              {animatedText.length === 0 && phase === 'IDLE' && (
+                <span className="placeholder-text">Reduction process will appear here</span>
+              )}
               {animatedText.map((item) => (
                 <motion.span
                   key={`${item.char}-${item.id}`}
@@ -164,7 +167,7 @@ function App() {
           <div className="canvas-frame">
             <SigilCanvas 
               letters={phase === 'GENERATING' || phase === 'COMPLETE' ? finalLetters : []} 
-              baseImageUrl="/Rose-Sigil/res/base.png"
+              baseImageUrl={`${import.meta.env.BASE_URL}res/base.png`}
               isGenerating={phase === 'GENERATING'}
               onGenerationComplete={() => setPhase('COMPLETE')}
             />
@@ -173,11 +176,11 @@ function App() {
           <div className="actions">
             <button className="primary-btn" onClick={downloadSigil} disabled={phase !== 'COMPLETE'}>
               <Download size={18} />
-              Salva Sigillo
+              Save Sigil
             </button>
             <button className="secondary-btn" disabled={phase !== 'COMPLETE'}>
               <Share2 size={18} />
-              Condividi
+              Share
             </button>
           </div>
         </section>
@@ -193,24 +196,24 @@ function App() {
             exit={{ opacity: 0, y: 20 }}
           >
             <div className="info-card">
-              <h2>Tecnica della Rose Cross</h2>
+              <h2>Rose Cross Technique</h2>
               <p>
-                Questa applicazione utilizza il metodo della Golden Dawn per la creazione di sigilli. 
-                Ogni lettera del tuo desiderio viene mappata sui petali della Rosa Croce.
+                This application uses the Golden Dawn method for sigil creation. 
+                Each letter of your desire is mapped onto the 22 petals of the Rose Cross.
               </p>
               <ul>
-                <li><strong>Inizio:</strong> Un cerchio indica la prima lettera.</li>
-                <li><strong>Fine:</strong> Un tratto perpendicolare chiude il sigillo.</li>
-                <li><strong>Lettere Doppie:</strong> Un occhiello segnala la ripetizione di una lettera.</li>
+                <li><strong>Start:</strong> A circle indicates the first letter.</li>
+                <li><strong>End:</strong> A perpendicular line closes the sigil path.</li>
+                <li><strong>Double Letters:</strong> A loop indicates a repeated letter.</li>
               </ul>
-              <button className="close-btn" onClick={() => setShowInfo(false)}>Chiudi</button>
+              <button className="close-btn" onClick={() => setShowInfo(false)}>Close</button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
       <footer className="main-footer">
-        <p>&copy; 2026 Rose Sigil • Creato con intenzione</p>
+        <p>&copy; 2026 Rose Sigil • Created with intention</p>
       </footer>
     </div>
   );
