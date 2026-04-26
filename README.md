@@ -16,7 +16,6 @@ A high-fidelity web application for generating esoteric sigils using the traditi
 - **Transparent Export**: High-quality PNG export for use in digital or physical ritual documents.
 - **Responsive Design**: Optimized for both high-end desktops and mobile devices.
 
-![Mobile View](screenshots/mobile_view.png)
 
 ## 📜 The Technique
 
