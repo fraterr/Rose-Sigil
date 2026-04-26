@@ -64,40 +64,14 @@ export interface SigilLetter {
   isDouble: boolean;
 }
 
-// Aiq Beker (The Kabbalah of Nine Chambers) reduction table
-const AIQ_BEKER_REDUCTION: Record<string, string> = {
-  // 1, 10, 100 -> Aleph
-  [HEBREW_ALPHABET.YOD]: HEBREW_ALPHABET.ALEPH,
-  [HEBREW_ALPHABET.QOPH]: HEBREW_ALPHABET.ALEPH,
-  // 2, 20, 200 -> Beth
-  [HEBREW_ALPHABET.KAPH]: HEBREW_ALPHABET.BETH,
-  [HEBREW_ALPHABET.RESH]: HEBREW_ALPHABET.BETH,
-  // 3, 30, 300 -> Gimel
-  [HEBREW_ALPHABET.LAMED]: HEBREW_ALPHABET.GIMEL,
-  [HEBREW_ALPHABET.SHIN]: HEBREW_ALPHABET.GIMEL,
-  // 4, 40, 400 -> Daleth
-  [HEBREW_ALPHABET.MEM]: HEBREW_ALPHABET.DALETH,
-  [HEBREW_ALPHABET.TAU]: HEBREW_ALPHABET.DALETH,
-  // 5, 50 -> He
-  [HEBREW_ALPHABET.NUN]: HEBREW_ALPHABET.HE,
-  // 6, 60 -> Vau
-  [HEBREW_ALPHABET.SAMEKH]: HEBREW_ALPHABET.VAU,
-  // 7, 70 -> Zain
-  [HEBREW_ALPHABET.AYIN]: HEBREW_ALPHABET.ZAIN,
-  // 8, 80 -> Cheth
-  [HEBREW_ALPHABET.PE]: HEBREW_ALPHABET.CHETH,
-  // 9, 90 -> Teth
-  [HEBREW_ALPHABET.TZADDI]: HEBREW_ALPHABET.TETH,
-};
-
-export function transliterate(input: string, useAiqBeker: boolean = false): SigilLetter[] {
+export function transliterate(input: string): SigilLetter[] {
   const result: SigilLetter[] = [];
-  // 1. Pulizia e rimozione vocali
+  // 1. Cleaning and vowel removal
   const vowels = ['a', 'e', 'i', 'o', 'u'];
   let text = input.toLowerCase().replace(/[^a-z]/g, '');
   text = text.split('').filter(char => !vowels.includes(char)).join('');
   
-  // 2. Mantenere solo la prima ricorrenza (unicità)
+  // 2. Keep only first occurrence (uniqueness)
   const seen = new Set<string>();
   const uniqueChars: string[] = [];
   for (const char of text) {
@@ -107,19 +81,15 @@ export function transliterate(input: string, useAiqBeker: boolean = false): Sigi
     }
   }
 
-  // 3. Traslitterazione in Ebraico
+  // 3. Transliteration to Hebrew
   let i = 0;
   while (i < uniqueChars.length) {
     const char = uniqueChars[i];
-    let hebrewChar = TRANSLITERATION_MAP[char] || '';
+    const hebrewChar = TRANSLITERATION_MAP[char] || '';
     
     if (hebrewChar) {
-      if (useAiqBeker && AIQ_BEKER_REDUCTION[hebrewChar]) {
-        hebrewChar = AIQ_BEKER_REDUCTION[hebrewChar];
-      }
-      
-      // In questa logica l'unicità è garantita a monte, 
-      // ma manteniamo la struttura SigilLetter per compatibilità.
+      // Uniqueness is guaranteed upstream, 
+      // but we keep the SigilLetter structure for compatibility.
       result.push({ char: hebrewChar, isDouble: false });
     }
     i++;

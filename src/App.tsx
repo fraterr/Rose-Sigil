@@ -10,7 +10,6 @@ type AnimationPhase = 'IDLE' | 'REMOVING_VOWELS' | 'REMOVING_DUPLICATES' | 'GENE
 function App() {
   const [desire, setDesire] = useState('');
   const [showInfo, setShowInfo] = useState(false);
-  const [useAiqBeker, setUseAiqBeker] = useState(false);
   
   const [phase, setPhase] = useState<AnimationPhase>('IDLE');
   const [animatedText, setAnimatedText] = useState<{char: string, id: number, status: 'active' | 'removing'}[]>([]);
@@ -64,9 +63,8 @@ function App() {
   };
 
   const finalLetters = useMemo(() => transliterate(
-    animatedText.filter(t => t.status === 'active').map(t => t.char).join(''), 
-    useAiqBeker
-  ), [animatedText, phase, useAiqBeker]);
+    animatedText.filter(t => t.status === 'active').map(t => t.char).join('')
+  ), [animatedText, phase]);
 
   const downloadSigil = () => {
     const canvas = document.querySelector('canvas');
@@ -105,18 +103,6 @@ function App() {
               autoComplete="off"
               disabled={phase !== 'IDLE' && phase !== 'COMPLETE'}
             />
-          </div>
-
-          <div className="options-group">
-            <label className="checkbox-label">
-              <input 
-                type="checkbox" 
-                checked={useAiqBeker} 
-                onChange={(e) => setUseAiqBeker(e.target.checked)}
-                disabled={phase !== 'IDLE'}
-              />
-              Use Aiq Beker Reduction (9 Chambers)
-            </label>
           </div>
 
           <button 
