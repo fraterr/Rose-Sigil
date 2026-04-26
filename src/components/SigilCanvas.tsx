@@ -1,8 +1,7 @@
 
 import { useEffect, useRef, useState } from 'react';
-import type { Point } from '../logic/coordinates';
 import { PETAL_COORDINATES } from '../logic/coordinates';
-import { SigilLetter } from '../logic/transliteration';
+import type { SigilLetter } from '../logic/transliteration';
 
 interface SigilCanvasProps {
   letters: SigilLetter[];
