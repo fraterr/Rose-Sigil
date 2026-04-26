@@ -120,12 +120,10 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
   }, [letters, progress, baseImageUrl]);
 
   return (
-    <div className="canvas-container" style={{ 
-      backgroundImage: `url(${baseImageUrl})`,
-      backgroundSize: 'contain',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat'
-    }}>
+    <div className="canvas-container">
+      <div className="canvas-bg-layer" style={{ 
+        backgroundImage: `url(${baseImageUrl})`
+      }} />
       <canvas 
         ref={canvasRef} 
         width={1000} 
