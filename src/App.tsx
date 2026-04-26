@@ -81,7 +81,7 @@ function App() {
     <div className="app-wrapper">
       <header className="main-header">
         <div className="logo">
-          <Sparkles size={24} className="logo-icon" />
+          <img src="/Rose-Sigil/logo.png" alt="Rose Sigil Logo" className="logo-img" />
           <h1>Rose Sigil</h1>
         </div>
         <button className="icon-btn" onClick={() => setShowInfo(!showInfo)}>
