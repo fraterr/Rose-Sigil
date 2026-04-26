@@ -261,21 +261,42 @@ input[type="text"]:focus {
 }
 
 .primary-btn, .secondary-btn {
-  background: transparent;
-  border: none;
+  background: rgba(212, 175, 55, 0.03);
+  border: 0.5px solid rgba(212, 175, 55, 0.3);
   color: var(--text-secondary);
   font-size: 0.75rem;
-  letter-spacing: 0.3em;
+  font-family: var(--font-main);
+  letter-spacing: 0.25em;
   text-transform: uppercase;
+  padding: 0.8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   cursor: pointer;
   transition: var(--transition);
-  border-bottom: 1px solid transparent;
-  padding-bottom: 4px;
+  border-radius: 4px;
+}
+
+.primary-btn svg, .secondary-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.5;
+  color: var(--accent-color);
+  opacity: 0.8;
 }
 
 .primary-btn:hover:not(:disabled), .secondary-btn:hover:not(:disabled) {
-  color: var(--accent-color);
-  border-bottom-color: var(--accent-color);
+  background: rgba(212, 175, 55, 0.1);
+  border-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+}
+
+.primary-btn:disabled, .secondary-btn:disabled {
+  opacity: 0.1;
+  cursor: not-allowed;
 }
 
 /* Overlays */
