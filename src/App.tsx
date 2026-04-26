@@ -190,17 +190,38 @@ function App() {
             exit={{ opacity: 0, y: 20 }}
           >
             <div className="info-card">
-              <h2>Rose Cross Technique</h2>
-              <p>
-                This application uses the Golden Dawn method for sigil creation. 
-                Each letter of your desire is mapped onto the 22 petals of the Rose Cross.
-              </p>
-              <ul>
-                <li><strong>Start:</strong> A circle indicates the first letter.</li>
-                <li><strong>End:</strong> A perpendicular line closes the sigil path.</li>
-                <li><strong>Double Letters:</strong> A loop indicates a repeated letter.</li>
-              </ul>
-              <button className="close-btn" onClick={() => setShowInfo(false)}>Close</button>
+              <h2>The Sacred Method</h2>
+              
+              <div className="info-section">
+                <h3>The Tradition</h3>
+                <p>
+                  The Rose Cross sigil creation is a ceremonial technique used by the 
+                  <em> Hermetic Order of the Golden Dawn</em>. It transforms a pure intention into 
+                  a geometric key, tracing the path of the soul through the 22 petals of the mystical Rose.
+                </p>
+              </div>
+
+              <div className="info-section">
+                <h3>The Alchemical Reduction</h3>
+                <p>To distill your desire into its core essence, the system follows three steps:</p>
+                <ul>
+                  <li><strong>Vowel Removal:</strong> Non-essential sounds are discarded.</li>
+                  <li><strong>Uniqueness:</strong> Only the first occurrence of each letter remains.</li>
+                  <li><strong>Transliteration:</strong> The result is mapped to the Hebrew alphabet.</li>
+                </ul>
+              </div>
+
+              <div className="info-section">
+                <h3>The Ritual Tracing</h3>
+                <p>As the sigil is drawn, pay attention to the sacred geometry:</p>
+                <ul>
+                  <li><strong>The Circle:</strong> Indicates the start of the divine spark.</li>
+                  <li><strong>The T-Bar:</strong> Represents the grounding and completion of the energy.</li>
+                  <li><strong>The Path:</strong> A single continuous flow of gold through the petals.</li>
+                </ul>
+              </div>
+
+              <button className="close-btn" onClick={() => setShowInfo(false)}>CLOSE</button>
             </div>
           </motion.div>
         )}
