@@ -50,8 +50,8 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
     img.src = baseImageUrl;
     img.onload = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
+      // Removed ctx.drawImage to allow transparent export
+      
       if (letters.length === 0 || progress === 0) return;
 
       const mappedPoints = letters
@@ -120,7 +120,12 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
   }, [letters, progress, baseImageUrl]);
 
   return (
-    <div className="canvas-container">
+    <div className="canvas-container" style={{ 
+      backgroundImage: `url(${baseImageUrl})`,
+      backgroundSize: 'contain',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
       <canvas 
         ref={canvasRef} 
         width={1000} 
