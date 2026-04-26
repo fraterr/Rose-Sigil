@@ -24,19 +24,19 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
       setProgress(0);
       let p = 0;
       const interval = setInterval(() => {
-        p += 0.02;
+        p += 0.008; // Slower increment for ritual feeling
         if (p >= 1) {
           p = 1;
           clearInterval(interval);
           onGenerationComplete?.();
         }
         setProgress(p);
-      }, 30);
+      }, 25); // Faster interval (40fps) for smoothness
       return () => clearInterval(interval);
     } else if (letters.length === 0) {
       setProgress(0);
     } else {
-      setProgress(1); // Show full sigil if not generating but letters exist
+      setProgress(1);
     }
   }, [isGenerating, letters.length]);
 
@@ -65,15 +65,18 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
 
       if (mappedPoints.length === 0) return;
 
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 4;
+      // Premium Gold Style
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 8;
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = 'rgba(212, 175, 55, 0.5)';
 
       // 1. Draw Start Circle
       const start = mappedPoints[0];
       ctx.beginPath();
-      ctx.arc(start.x, start.y, 8, 0, Math.PI * 2);
+      ctx.arc(start.x, start.y, 10, 0, Math.PI * 2);
       ctx.stroke();
 
       // 2. Draw Lines with Progress
@@ -94,13 +97,6 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(targetX, targetY);
         ctx.stroke();
-
-        // Rule for double letters: small loop (wave)
-        if (p1.isDouble && stepProgress === 1) {
-          ctx.beginPath();
-          ctx.arc(p1.x, p1.y - 10, 8, 0, Math.PI * 2);
-          ctx.stroke();
-        }
       }
 
       // 3. Draw End Bar if complete
@@ -114,18 +110,11 @@ export const SigilCanvas: React.FC<SigilCanvasProps> = ({
         const nx = -dy / len;
         const ny = dx / len;
         
-        const barHalfLen = 12;
+        const barHalfLen = 15;
         ctx.beginPath();
         ctx.moveTo(end.x + nx * barHalfLen, end.y + ny * barHalfLen);
         ctx.lineTo(end.x - nx * barHalfLen, end.y - ny * barHalfLen);
         ctx.stroke();
-
-        // Double check last letter for double
-        if (end.isDouble) {
-          ctx.beginPath();
-          ctx.arc(end.x, end.y - 10, 8, 0, Math.PI * 2);
-          ctx.stroke();
-        }
       }
     };
   }, [letters, progress, baseImageUrl]);
