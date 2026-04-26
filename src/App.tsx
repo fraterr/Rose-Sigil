@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { SigilCanvas } from './components/SigilCanvas';
 import { transliterate } from './logic/transliteration';
-import { Sparkles, Download, Info, Share2 } from 'lucide-react';
+import { Download, Info, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 
