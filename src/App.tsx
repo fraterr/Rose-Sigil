@@ -89,64 +89,72 @@ function App() {
 
       <main className="content">
         <section className="input-section">
-          <div className="input-group">
-            <label htmlFor="desire">Your Desire</label>
-            <input
-              id="desire"
-              type="text"
-              placeholder="Write here..."
-              value={desire}
-              onChange={(e) => {
-                setDesire(e.target.value);
-                setPhase('IDLE');
-              }}
-              autoComplete="off"
-              disabled={phase !== 'IDLE' && phase !== 'COMPLETE'}
-            />
-          </div>
-
-          <button 
-            className="generate-btn" 
-            onClick={handleGenerate} 
-            disabled={!desire || (phase !== 'IDLE' && phase !== 'COMPLETE')}
-          >
-            {phase === 'IDLE' || phase === 'COMPLETE' ? 'Generate Sigil' : 'Processing...'}
-          </button>
-
-          <div className="visual-reduction">
-            <AnimatePresence mode="popLayout">
-              {animatedText.length === 0 && phase === 'IDLE' && (
-                <span className="placeholder-text">Reduction process will appear here</span>
-              )}
-              {animatedText.map((item) => (
-                <motion.span
-                  key={`${item.char}-${item.id}`}
-                  layout
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ 
-                    opacity: item.status === 'removing' ? 0 : 1,
-                    scale: item.status === 'removing' ? 1.5 : 1,
-                    color: item.status === 'removing' ? '#ff4d4d' : '#d4af37'
-                  }}
-                  exit={{ opacity: 0, scale: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="anim-char"
-                >
-                  {item.char}
-                </motion.span>
-              ))}
-            </AnimatePresence>
-          </div>
-
-          {phase === 'COMPLETE' && (
-            <div className="letters-preview">
-              {finalLetters.map((l, i) => (
-                <span key={i} className="hebrew-letter">
-                  {l.char}
-                </span>
-              ))}
+          <div className="input-slot">
+            <div className="input-group">
+              <label htmlFor="desire">Your Desire</label>
+              <input
+                id="desire"
+                type="text"
+                placeholder="Write here..."
+                value={desire}
+                onChange={(e) => {
+                  setDesire(e.target.value);
+                  setPhase('IDLE');
+                }}
+                autoComplete="off"
+                disabled={phase !== 'IDLE' && phase !== 'COMPLETE'}
+              />
             </div>
-          )}
+          </div>
+
+          <div className="button-slot">
+            <button 
+              className="generate-btn" 
+              onClick={handleGenerate} 
+              disabled={!desire || (phase !== 'IDLE' && phase !== 'COMPLETE')}
+            >
+              {phase === 'IDLE' || phase === 'COMPLETE' ? 'Generate Sigil' : 'Processing...'}
+            </button>
+          </div>
+
+          <div className="reduction-slot">
+            <div className="visual-reduction">
+              <AnimatePresence mode="popLayout">
+                {animatedText.length === 0 && phase === 'IDLE' && (
+                  <span className="placeholder-text">Reduction process will appear here</span>
+                )}
+                {animatedText.map((item) => (
+                  <motion.span
+                    key={`${item.char}-${item.id}`}
+                    layout
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ 
+                      opacity: item.status === 'removing' ? 0 : 1,
+                      scale: item.status === 'removing' ? 1.5 : 1,
+                      color: item.status === 'removing' ? '#ff4d4d' : '#d4af37'
+                    }}
+                    exit={{ opacity: 0, scale: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="anim-char"
+                  >
+                    {item.char}
+                  </motion.span>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <div className="hebrew-slot">
+            {phase === 'COMPLETE' && (
+              <div className="letters-preview">
+                {finalLetters.map((l, i) => (
+                  <span key={i} className="hebrew-letter">
+                    {l.char}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </section>
 
         <section className="canvas-section">
