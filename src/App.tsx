@@ -5,7 +5,7 @@ import { Download, Info, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 
-type AnimationPhase = 'IDLE' | 'REMOVING_VOWELS' | 'REMOVING_DUPLICATES' | 'TRANSLITERATING' | 'GENERATING' | 'COMPLETE';
+type AnimationPhase = 'IDLE' | 'REMOVING_VOWELS' | 'REMOVING_DUPLICATES' | 'GENERATING' | 'COMPLETE';
 
 function App() {
   const [desire, setDesire] = useState('');
@@ -34,7 +34,7 @@ function App() {
       vowels.includes(item.char) ? { ...item, status: 'removing' } : item
     ));
     
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 800));
     const noVowels = initialText.filter(item => !vowels.includes(item.char))
       .map((item, i) => ({ ...item, id: i, status: 'active' as const }));
     setAnimatedText(noVowels);
@@ -49,7 +49,7 @@ function App() {
       return item;
     }));
     
-    await new Promise(r => setTimeout(r, 1000));
+    await new Promise(r => setTimeout(r, 800));
     seen.clear();
     const unique = noVowels.filter(item => {
       if (seen.has(item.char)) return false;
@@ -57,12 +57,8 @@ function App() {
       return true;
     }).map((item, i) => ({ ...item, id: i, status: 'active' as const }));
     setAnimatedText(unique);
-
-    // 3. Transmutation Phase (Latin to Hebrew)
-    setPhase('TRANSLITERATING');
-    await new Promise(r => setTimeout(r, 2000)); // Slow fade transition
     
-    // 4. Sigil Phase
+    // 3. Sigil Phase
     setPhase('GENERATING');
   };
 
@@ -122,45 +118,35 @@ function App() {
               {animatedText.length === 0 && phase === 'IDLE' && (
                 <span className="placeholder-text">Reduction process will appear here</span>
               )}
-              
-              {/* Latin Letters Phase */}
-              {(phase === 'IDLE' || phase === 'REMOVING_VOWELS' || phase === 'REMOVING_DUPLICATES' || phase === 'TRANSLITERATING') && 
-                animatedText.map((item) => (
-                  <motion.span
-                    key={`${item.char}-${item.id}`}
-                    layout
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ 
-                      opacity: (item.status === 'removing' || phase === 'TRANSLITERATING') ? 0 : 1,
-                      scale: item.status === 'removing' ? 1.5 : 1,
-                      color: item.status === 'removing' ? '#ff4d4d' : '#d4af37'
-                    }}
-                    exit={{ opacity: 0, scale: 0 }}
-                    transition={{ duration: phase === 'TRANSLITERATING' ? 1.5 : 0.5 }}
-                    className="anim-char"
-                  >
-                    {item.char}
-                  </motion.span>
-                ))
-              }
-
-              {/* Hebrew Letters Phase */}
-              {(phase === 'TRANSLITERATING' || phase === 'GENERATING' || phase === 'COMPLETE') && 
-                finalLetters.map((l, i) => (
-                  <motion.span
-                    key={`hebrew-${i}`}
-                    initial={{ opacity: 0, scale: 1.2 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: phase === 'TRANSLITERATING' ? 0.8 : 0, duration: 1.2 }}
-                    className="anim-char hebrew"
-                    style={{ fontFamily: "'Noto Sans Hebrew', sans-serif" }}
-                  >
-                    {l.char}
-                  </motion.span>
-                ))
-              }
+              {animatedText.map((item) => (
+                <motion.span
+                  key={`${item.char}-${item.id}`}
+                  layout
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ 
+                    opacity: item.status === 'removing' ? 0 : 1,
+                    scale: item.status === 'removing' ? 1.5 : 1,
+                    color: item.status === 'removing' ? '#ff4d4d' : '#d4af37'
+                  }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="anim-char"
+                >
+                  {item.char}
+                </motion.span>
+              ))}
             </AnimatePresence>
           </div>
+
+          {phase === 'COMPLETE' && (
+            <div className="letters-preview">
+              {finalLetters.map((l, i) => (
+                <span key={i} className="hebrew-letter">
+                  {l.char}
+                </span>
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="canvas-section">
