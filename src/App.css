@@ -383,53 +383,28 @@ input[type="text"]:focus {
   position: relative;
 }
 
-.method-btn {
+.about-btn {
   position: absolute;
   top: 0;
   right: 0;
   background: transparent;
   border: 0.5px solid rgba(212, 175, 55, 0.4);
   color: var(--accent-color);
-  padding: 0.8rem;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  gap: 0;
+  padding: 0.6rem 1.8rem;
+  border-radius: 2px;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-  max-width: 44px;
-  white-space: nowrap;
+  transition: var(--transition);
 }
 
-.method-btn:hover {
-  max-width: 200px;
-  gap: 1rem;
-  padding: 0.8rem 1.5rem;
+.about-btn:hover {
   background: rgba(212, 175, 55, 0.05);
   border-color: var(--accent-color);
-  box-shadow: 0 0 25px var(--accent-glow);
-}
-
-.method-label {
-  font-family: var(--font-title);
-  font-size: 0.8rem;
-  letter-spacing: 0.2em;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.method-btn:hover .method-label {
-  opacity: 1;
-}
-
-.method-btn svg {
-  flex-shrink: 0;
-  transition: transform 0.6s ease;
-}
-
-.method-btn:hover svg {
-  transform: rotate(90deg);
+  box-shadow: 0 0 20px var(--accent-glow);
+  color: white;
 }
 
 @media (max-width: 1100px) {
