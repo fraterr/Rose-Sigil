@@ -56,13 +56,8 @@ export const TRANSLITERATION_MAP: Record<string, string> = {
 };
 
 // Special cases for digraphs
-const DIGRAPHS: Record<string, string> = {
-  'ch': HEBREW_ALPHABET.CHETH,
-  'sh': HEBREW_ALPHABET.SHIN,
-  'th': HEBREW_ALPHABET.TAU,
-  'ph': HEBREW_ALPHABET.PE,
-  'tz': HEBREW_ALPHABET.TZADDI,
-};
+// (Removed as per new reduction logic that processes single letters)
+
 
 export interface SigilLetter {
   char: string;
