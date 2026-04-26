@@ -375,32 +375,61 @@ input[type="text"]:focus {
   opacity: 0.4;
 }
 
-.method-btn {
-  background: transparent;
-  border: 0.5px solid rgba(212, 175, 55, 0.3);
-  color: var(--accent-color);
-  padding: 0.6rem 1.2rem;
-  border-radius: 20px;
+.main-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
-  cursor: pointer;
-  transition: var(--transition);
-  opacity: 0.7;
+  gap: 2rem;
+  position: relative;
 }
 
-.method-btn span {
-  font-family: var(--font-main);
-  font-size: 0.7rem;
-  letter-spacing: 0.25em;
-  font-weight: 400;
+.method-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: 0.5px solid rgba(212, 175, 55, 0.4);
+  color: var(--accent-color);
+  padding: 0.8rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  max-width: 44px;
+  white-space: nowrap;
 }
 
 .method-btn:hover {
-  opacity: 1;
+  max-width: 200px;
+  gap: 1rem;
+  padding: 0.8rem 1.5rem;
   background: rgba(212, 175, 55, 0.05);
   border-color: var(--accent-color);
-  box-shadow: 0 0 20px var(--accent-glow);
+  box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.method-label {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.method-btn:hover .method-label {
+  opacity: 1;
+}
+
+.method-btn svg {
+  flex-shrink: 0;
+  transition: transform 0.6s ease;
+}
+
+.method-btn:hover svg {
+  transform: rotate(90deg);
 }
 
 @media (max-width: 1100px) {

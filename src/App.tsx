@@ -83,8 +83,8 @@ function App() {
           <h1>Rose Sigil</h1>
         </div>
         <button className="method-btn" onClick={() => setShowInfo(!showInfo)}>
-          <Info size={14} />
-          <span>THE TECHNIQUE</span>
+          <Info size={18} />
+          <span className="method-label">THE METHOD</span>
         </button>
       </header>
 
