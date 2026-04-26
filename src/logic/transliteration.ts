@@ -97,34 +97,37 @@ const AIQ_BEKER_REDUCTION: Record<string, string> = {
 
 export function transliterate(input: string, useAiqBeker: boolean = false): SigilLetter[] {
   const result: SigilLetter[] = [];
-  const text = input.toLowerCase().replace(/[^a-z]/g, '');
+  // 1. Pulizia e rimozione vocali
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  let text = input.toLowerCase().replace(/[^a-z]/g, '');
+  text = text.split('').filter(char => !vowels.includes(char)).join('');
   
-  let i = 0;
-  while (i < text.length) {
-    const twoChars = text.substring(i, i + 2);
-    let hebrewChar = '';
-    
-    if (DIGRAPHS[twoChars]) {
-      hebrewChar = DIGRAPHS[twoChars];
-      i += 2;
-    } else {
-      const char = text[i];
-      hebrewChar = TRANSLITERATION_MAP[char] || '';
-      i++;
+  // 2. Mantenere solo la prima ricorrenza (unicità)
+  const seen = new Set<string>();
+  const uniqueChars: string[] = [];
+  for (const char of text) {
+    if (!seen.has(char)) {
+      seen.add(char);
+      uniqueChars.push(char);
     }
+  }
+
+  // 3. Traslitterazione in Ebraico
+  let i = 0;
+  while (i < uniqueChars.length) {
+    const char = uniqueChars[i];
+    let hebrewChar = TRANSLITERATION_MAP[char] || '';
     
     if (hebrewChar) {
       if (useAiqBeker && AIQ_BEKER_REDUCTION[hebrewChar]) {
         hebrewChar = AIQ_BEKER_REDUCTION[hebrewChar];
       }
       
-      const last = result[result.length - 1];
-      if (last && last.char === hebrewChar) {
-        last.isDouble = true;
-      } else {
-        result.push({ char: hebrewChar, isDouble: false });
-      }
+      // In questa logica l'unicità è garantita a monte, 
+      // ma manteniamo la struttura SigilLetter per compatibilità.
+      result.push({ char: hebrewChar, isDouble: false });
     }
+    i++;
   }
   
   return result;
