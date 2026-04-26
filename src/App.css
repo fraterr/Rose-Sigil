@@ -349,6 +349,34 @@ input[type="text"]:focus {
   opacity: 0.4;
 }
 
+.icon-btn {
+  background: transparent;
+  border: 0.5px solid rgba(212, 175, 55, 0.4);
+  color: var(--accent-color);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  opacity: 0.6;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-glow);
+  transform: scale(1.05);
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.5;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
