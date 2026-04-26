@@ -8,8 +8,17 @@ import './App.css';
 function App() {
   const [desire, setDesire] = useState('');
   const [showInfo, setShowInfo] = useState(false);
+  const [useAiqBeker, setUseAiqBeker] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(false);
 
-  const letters = useMemo(() => transliterate(desire), [desire]);
+  const letters = useMemo(() => transliterate(desire, useAiqBeker), [desire, useAiqBeker]);
+
+  const handleGenerate = () => {
+    if (!desire) return;
+    setIsGenerating(true);
+    setHasGenerated(false);
+  };
 
   const downloadSigil = () => {
     const canvas = document.querySelector('canvas');
@@ -41,31 +50,64 @@ function App() {
               type="text"
               placeholder="Scrivi qui..."
               value={desire}
-              onChange={(e) => setDesire(e.target.value)}
+              onChange={(e) => {
+                setDesire(e.target.value);
+                setHasGenerated(false);
+              }}
               autoComplete="off"
+              disabled={isGenerating}
             />
-            <div className="letters-preview">
-              {letters.map((l, i) => (
-                <span key={i} className="hebrew-letter">{l}</span>
-              ))}
-            </div>
+          </div>
+
+          <div className="options-group">
+            <label className="checkbox-label">
+              <input 
+                type="checkbox" 
+                checked={useAiqBeker} 
+                onChange={(e) => setUseAiqBeker(e.target.checked)}
+                disabled={isGenerating}
+              />
+              Usa Riduzione Aiq Beker (9 Camere)
+            </label>
+          </div>
+
+          <button 
+            className="generate-btn" 
+            onClick={handleGenerate} 
+            disabled={!desire || isGenerating}
+          >
+            {isGenerating ? 'Creazione in corso...' : 'Genera Sigillo'}
+          </button>
+
+          <div className="letters-preview">
+            {letters.map((l, i) => (
+              <span key={i} className="hebrew-letter" title={l.isDouble ? 'Lettera Doppia' : ''}>
+                {l.char}
+                {l.isDouble && <span className="double-indicator">∞</span>}
+              </span>
+            ))}
           </div>
         </section>
 
         <section className="canvas-section">
           <div className="canvas-frame">
             <SigilCanvas 
-              letters={letters} 
-              baseImageUrl="/Rose-Sigil/res/base.png" // Path for GitHub Pages
+              letters={hasGenerated || isGenerating ? letters : []} 
+              baseImageUrl="/Rose-Sigil/res/base.png"
+              isGenerating={isGenerating}
+              onGenerationComplete={() => {
+                setIsGenerating(false);
+                setHasGenerated(true);
+              }}
             />
           </div>
           
           <div className="actions">
-            <button className="primary-btn" onClick={downloadSigil} disabled={!desire}>
+            <button className="primary-btn" onClick={downloadSigil} disabled={!hasGenerated}>
               <Download size={18} />
               Salva Sigillo
             </button>
-            <button className="secondary-btn">
+            <button className="secondary-btn" disabled={!hasGenerated}>
               <Share2 size={18} />
               Condividi
             </button>
@@ -85,9 +127,13 @@ function App() {
               <h2>Tecnica della Rose Cross</h2>
               <p>
                 Questa applicazione utilizza il metodo della Golden Dawn per la creazione di sigilli. 
-                Ogni lettera del tuo desiderio viene mappata sui petali della Rosa Croce e collegata 
-                per formare un simbolo unico e personale.
+                Ogni lettera del tuo desiderio viene mappata sui petali della Rosa Croce.
               </p>
+              <ul>
+                <li><strong>Inizio:</strong> Un cerchio indica la prima lettera.</li>
+                <li><strong>Fine:</strong> Un tratto perpendicolare chiude il sigillo.</li>
+                <li><strong>Lettere Doppie:</strong> Un occhiello segnala la ripetizione di una lettera.</li>
+              </ul>
               <button className="close-btn" onClick={() => setShowInfo(false)}>Chiudi</button>
             </div>
           </motion.div>

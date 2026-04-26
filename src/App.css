@@ -120,7 +120,54 @@ input[type="text"]:focus {
   min-height: 2rem;
 }
 
+.options-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  accent-color: var(--accent-color);
+  width: 18px;
+  height: 18px;
+}
+
+.generate-btn {
+  background: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  padding: 1.25rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.generate-btn:hover:not(:disabled) {
+  background: var(--accent-color);
+  color: black;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+.generate-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .hebrew-letter {
+  position: relative;
   font-family: 'Noto Sans Hebrew', sans-serif;
   font-size: 1.5rem;
   color: var(--accent-color);
@@ -128,6 +175,22 @@ input[type="text"]:focus {
   padding: 0.25rem 0.75rem;
   border-radius: 8px;
   animation: fadeIn 0.3s ease-out;
+}
+
+.double-indicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--accent-color);
+  color: black;
+  font-size: 0.6rem;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
 }
 
 /* Canvas Section */
@@ -256,6 +319,26 @@ input[type="text"]:focus {
 .info-card p {
   color: var(--text-secondary);
   line-height: 1.7;
+}
+
+.info-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0;
+}
+
+.info-card li {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.info-card li strong {
+  color: var(--accent-color);
+  min-width: 100px;
 }
 
 .close-btn {

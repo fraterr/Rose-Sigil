@@ -64,30 +64,68 @@ const DIGRAPHS: Record<string, string> = {
   'tz': HEBREW_ALPHABET.TZADDI,
 };
 
-export function transliterate(input: string): string[] {
-  const result: string[] = [];
+export interface SigilLetter {
+  char: string;
+  isDouble: boolean;
+}
+
+// Aiq Beker (The Kabbalah of Nine Chambers) reduction table
+const AIQ_BEKER_REDUCTION: Record<string, string> = {
+  // 1, 10, 100 -> Aleph
+  [HEBREW_ALPHABET.YOD]: HEBREW_ALPHABET.ALEPH,
+  [HEBREW_ALPHABET.QOPH]: HEBREW_ALPHABET.ALEPH,
+  // 2, 20, 200 -> Beth
+  [HEBREW_ALPHABET.KAPH]: HEBREW_ALPHABET.BETH,
+  [HEBREW_ALPHABET.RESH]: HEBREW_ALPHABET.BETH,
+  // 3, 30, 300 -> Gimel
+  [HEBREW_ALPHABET.LAMED]: HEBREW_ALPHABET.GIMEL,
+  [HEBREW_ALPHABET.SHIN]: HEBREW_ALPHABET.GIMEL,
+  // 4, 40, 400 -> Daleth
+  [HEBREW_ALPHABET.MEM]: HEBREW_ALPHABET.DALETH,
+  [HEBREW_ALPHABET.TAU]: HEBREW_ALPHABET.DALETH,
+  // 5, 50 -> He
+  [HEBREW_ALPHABET.NUN]: HEBREW_ALPHABET.HE,
+  // 6, 60 -> Vau
+  [HEBREW_ALPHABET.SAMEKH]: HEBREW_ALPHABET.VAU,
+  // 7, 70 -> Zain
+  [HEBREW_ALPHABET.AYIN]: HEBREW_ALPHABET.ZAIN,
+  // 8, 80 -> Cheth
+  [HEBREW_ALPHABET.PE]: HEBREW_ALPHABET.CHETH,
+  // 9, 90 -> Teth
+  [HEBREW_ALPHABET.TZADDI]: HEBREW_ALPHABET.TETH,
+};
+
+export function transliterate(input: string, useAiqBeker: boolean = false): SigilLetter[] {
+  const result: SigilLetter[] = [];
   const text = input.toLowerCase().replace(/[^a-z]/g, '');
   
   let i = 0;
   while (i < text.length) {
-    // Check for digraphs first
     const twoChars = text.substring(i, i + 2);
+    let hebrewChar = '';
+    
     if (DIGRAPHS[twoChars]) {
-      result.push(DIGRAPHS[twoChars]);
+      hebrewChar = DIGRAPHS[twoChars];
       i += 2;
-      continue;
+    } else {
+      const char = text[i];
+      hebrewChar = TRANSLITERATION_MAP[char] || '';
+      i++;
     }
     
-    // Check single chars
-    const char = text[i];
-    if (TRANSLITERATION_MAP[char]) {
-      result.push(TRANSLITERATION_MAP[char]);
+    if (hebrewChar) {
+      if (useAiqBeker && AIQ_BEKER_REDUCTION[hebrewChar]) {
+        hebrewChar = AIQ_BEKER_REDUCTION[hebrewChar];
+      }
+      
+      const last = result[result.length - 1];
+      if (last && last.char === hebrewChar) {
+        last.isDouble = true;
+      } else {
+        result.push({ char: hebrewChar, isDouble: false });
+      }
     }
-    i++;
   }
   
-  // Sigil rule: often duplicates are removed to avoid loops on the same spot, 
-  // but in the Rose Cross method, if a letter repeats, we usually just go back to it.
-  // However, it's common to remove consecutive duplicates.
-  return result.filter((val, index, self) => index === 0 || val !== self[index - 1]);
+  return result;
 }
