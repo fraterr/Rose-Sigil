@@ -121,8 +121,7 @@ body {
   height: 150px;
   display: flex;
   align-items: center;
-  border-top: 0.2px solid rgba(212, 175, 55, 0.1);
-  border-bottom: 0.2px solid rgba(212, 175, 55, 0.1);
+  /* Removed borders to prevent intersection */
 }
 
 .hebrew-slot {
